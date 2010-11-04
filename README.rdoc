@@ -1,6 +1,62 @@
 = module_chain_method
 
-Description goes here.
+Provides a simple Module mixin to handle method aliasing for chaining.
+
+== Example
+
+  require 'module/chain_method' # Module::ChainMethod
+
+  module MyMixin
+    def self.included target
+      super
+      $stderr.puts "MyMixin.included #{target}
+    end		 
+    include ::Module::ChainMethod
+
+    def foo
+      puts "MyMixin#foo"
+      foo_without_MyMixin
+    end
+
+    def bar
+      puts "MyMixin#bar"
+    end
+
+    # Prepares method #foo for chaining.
+    chain_method :foo
+  end
+      
+  class Foo
+    def foo
+      puts "Foo#foo"
+    end
+        
+    def bar
+      puts "Foo#bar"
+      super rescue nil
+    end
+  end
+
+  f = Foo.new
+  f.foo
+  f.bar
+  puts
+
+  Foo.send(:include, MyMixin)
+  f.foo
+  f.bar
+
+Generates the following output:
+
+   > ruby -I lib example/ex01.rb
+  Foo#foo
+  Foo#bar
+  
+  MyMixin.included Foo
+  MyMixin#foo
+  Foo#foo
+  Foo#bar
+  MyMixin#bar
 
 == Note on Patches/Pull Requests
  
