@@ -28,7 +28,29 @@ class TestModuleChainMethod < Test::Unit::TestCase
                  )
                  
   end
-end
+
+  should "handle multiple includes" do
+    Module::ChainMethod::Test::Foo.class_eval do
+      include Module::ChainMethod::Test::MyMixin
+    end
+    assert_equal( 
+                 [ 
+                  "MyMixin.included Module::ChainMethod::Test::Foo",
+                  "MyMixin.included Module::ChainMethod::Test::Foo",
+                 ],
+                 Module::ChainMethod::Test::MyMixin.instance_variable_get("@calls")
+                 )
+
+    f = Module::ChainMethod::Test::Foo.new
+    f.foo
+    f.bar
+    assert_equal(
+                 [ "MyMixin#foo", "Foo#foo", "Foo#bar" ],
+                 f.instance_variable_get("@calls")
+                 )
+                 
+  end
+end 
 
 
 ######################################################################

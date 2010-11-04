@@ -4,11 +4,11 @@ class Module
     def self.included target
       # $stderr.puts "ChainMethod #{self.inspect}.included #{target}"
       super
-      target.extend(ClassMethods)  if Class  === target 
-      target.extend(ModuleMethods) if Module === target
-      if target.method_defined?(:included)
+      if target.method_defined?(:included) && ! target.method_defined?(:included_without_ChainMethod)
         target.send(:alias_method, :included_without_ChainMethod, :included)
       end
+      target.extend(ClassMethods)  if Class  === target 
+      target.extend(ModuleMethods) if Module === target
     end
 
     module ModuleMethods 
