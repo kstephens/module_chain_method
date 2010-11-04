@@ -1,6 +1,6 @@
 = module_chain_method
 
-Module mixin to handle method chain aliasing.
+Module::ChainMethod mixin to simplify method chain aliasing.
 
 == Example
 

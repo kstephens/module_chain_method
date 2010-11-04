@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "module_chain_method"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Module::ChainMethod mixin to simplify method chain aliasing.}
+    gem.description = %Q{Module::ChainMethod mixin to simplify method chain aliasing.}
     gem.email = "ks.github@kurtstephens.com"
     gem.homepage = "http://github.com/kstephens/module_chain_method"
     gem.authors = ["Kurt Stephens"]
